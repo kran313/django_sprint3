@@ -4,14 +4,16 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
+
 class BaseModel(models.Model):
     is_published = models.BooleanField(default=True,
                                        verbose_name='Опубликовано',
                                        help_text='Снимите галочку, чтобы скрыть публикацию.')
-    created_at = models.DateTimeField(auto_created=True, verbose_name='Добавлено')
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Добавлено')
 
     class Meta:
         abstract = True
+
 
 class Category(BaseModel):
     title = models.CharField(max_length=256, verbose_name='Заголовок')
@@ -27,6 +29,7 @@ class Category(BaseModel):
     def __str__(self):
         return self.title
 
+
 class Location(BaseModel):
     name = models.CharField(max_length=256, verbose_name='Название места')
 
@@ -36,6 +39,7 @@ class Location(BaseModel):
 
     def __str__(self):
         return self.name
+
 
 class Post(BaseModel):
     title = models.CharField(max_length=256, verbose_name='Заголовок')

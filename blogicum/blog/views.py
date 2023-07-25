@@ -1,5 +1,5 @@
 from django.http import HttpRequest, HttpResponse
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from blog.models import Post, Category
 from datetime import datetime
 
@@ -27,11 +27,17 @@ def category_posts(request: HttpRequest, category_slug: str) -> HttpResponse:
         'posts'
         ).filter(is_published=True,
                  pub_date__lt=datetime.now())
-
-    """post_list = Post.objects.select_related(
+    
+    """post_list = get_object_or_404(
+        Category.objects.filter(is_published=True),
+        pk=pk
+        ).select_related(
         'posts'
-        ).filter(slug=category_slug,
-                 is_published=True,
+        ).filter(is_published=True,
                  pub_date__lt=datetime.now())"""
+
+    
+
+
     context: dict = {'post_list': post_list}
     return render(request, template_name, context)
