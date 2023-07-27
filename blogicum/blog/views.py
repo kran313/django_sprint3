@@ -8,9 +8,9 @@ def index(request: HttpRequest) -> HttpResponse:
     template_name: str = 'blog/index.html'
     post_list = Post.objects.select_related(
         'category'
-        ).filter(pub_date__lte=datetime.datetime.now(),
-                 is_published=True,
-                 category__is_published=True)[:5]
+    ).filter(pub_date__lte=datetime.datetime.now(),
+             is_published=True,
+             category__is_published=True)[:5]
     context: dict = {'post_list': post_list}
     return render(request, template_name, context)
 
@@ -24,7 +24,7 @@ def post_detail(request: HttpRequest, id: int) -> HttpResponse:
         pub_date__lte=datetime.datetime.now(),
         is_published=True,
         category__is_published=True
-        )
+    )
 
     context: dict = {'post': posts}
     return render(request, template_name, context)
