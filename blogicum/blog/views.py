@@ -4,13 +4,15 @@ from blog.models import Post, Category
 import datetime
 
 
+NUMBER_OF_POSTS_ON_MAIN_PAGE: int = 5
+
 def index(request: HttpRequest) -> HttpResponse:
     template_name: str = 'blog/index.html'
     post_list = Post.objects.select_related(
         'category'
     ).filter(pub_date__lte=datetime.datetime.now(),
              is_published=True,
-             category__is_published=True)[:5]
+             category__is_published=True)[:NUMBER_OF_POSTS_ON_MAIN_PAGE]
     context: dict = {'post_list': post_list}
     return render(request, template_name, context)
 

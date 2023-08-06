@@ -6,6 +6,7 @@ User = get_user_model()
 
 
 class BaseModel(models.Model):
+    """Базовая модель с общими данными"""
     is_published = models.BooleanField(
         default=True,
         verbose_name='Опубликовано',
@@ -21,6 +22,7 @@ class BaseModel(models.Model):
 
 
 class Category(BaseModel):
+    """Модель для описания Категорий"""
     title = models.CharField(max_length=256, verbose_name='Заголовок')
     description = models.TextField(verbose_name='Описание')
     slug = models.SlugField(
@@ -39,6 +41,7 @@ class Category(BaseModel):
 
 
 class Location(BaseModel):
+    """Модель для описания Местоположений"""
     name = models.CharField(max_length=256, verbose_name='Название места')
 
     class Meta:
@@ -50,6 +53,7 @@ class Location(BaseModel):
 
 
 class Post(BaseModel):
+    """Модель для описания Постов"""
     title = models.CharField(max_length=256, verbose_name='Заголовок')
     text = models.TextField(verbose_name='Текст')
     pub_date = models.DateTimeField(
@@ -79,6 +83,7 @@ class Post(BaseModel):
     class Meta:
         verbose_name = 'публикация'
         verbose_name_plural = 'Публикации'
+        ordering = ["-pub_date"]
 
     def __str__(self):
         return self.title
