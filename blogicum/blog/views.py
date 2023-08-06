@@ -6,6 +6,7 @@ import datetime
 
 NUMBER_OF_POSTS_ON_MAIN_PAGE: int = 5
 
+
 def index(request: HttpRequest) -> HttpResponse:
     template_name: str = 'blog/index.html'
     post_list = Post.objects.select_related(
